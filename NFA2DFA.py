@@ -1,45 +1,37 @@
-class estado:
-    def __init__(self, estado):
-        self.estado = estado
-        self.transiciones = []
 
-    def agregarTransiciones(self, transAgregar):
-        self.transiciones.append(transAgregar)
-
-    def miEstado(self):
-        print("ESTADO :")
-        print(self.estado)
-    def misTransiciones(self):
-        print("TRANSICIONES DE " + self.estado)
-        for i in self.transiciones:
-            print(i.miTrans())
 
 class transicion:
-    def __init__(self, lectura, destino):
+    def __init__(self, lectura,estado, destino):
+        self.estado = estado
         self.lectura = lectura
         self.destino = destino
     def miTrans(self):
-        print("TRANSICION")
-        print(self.lectura)
-        print(self.destino.estado)
+        print("TRANSICION", self)
+        print(self.lectura, self.estado, self.destino)
+    def miEstado(self):
+        return self.estado
 
 
-def recorrer():
-
-
+def recorrerEstados(estadoInicial, arrTransiciones, aceptacion):
+    estadoActual = estadoInicial
+    for tra in arrTransiciones:
+        #print(tra.miTrans())
+        if(estadoActual == tra.estado):
+            print(tra.miTrans())
+            estadoActual = tra.destino
 
 if __name__ == '__main__':
     print("NFA 2 DFA PYTHON SCRIPT")
-    e1 = estado("e1")
-    transi1 = transicion(0, e1)
+    estadoActual= "p"
+    estadoAceptacion = "s"
+    arrTransiciones = []
+    arrTransiciones.append(transicion(0, "p", "p" ))
+    arrTransiciones.append(transicion(0, "p", "q" ))
+    arrTransiciones.append(transicion(1, "p", "p" ))
+    arrTransiciones.append(transicion(0, "q", "r" ))
+    arrTransiciones.append(transicion(1, "q", "r"))
+    arrTransiciones.append(transicion(0, "r", "s"))
+    arrTransiciones.append(transicion(0, "s", "s"))
+    arrTransiciones.append(transicion(1, "s", "s"))
 
-    e1.agregarTransiciones(transi1)
-
-    e1.misTransiciones()
-
-    #e1.misTransiciones()
-    e2 = estado("e2")
-    e2.agregarTransiciones(transi1)
-
-    e2.misTransiciones()
-
+    recorrerEstados("p", arrTransiciones, estadoAceptacion)
