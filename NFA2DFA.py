@@ -1,37 +1,47 @@
-
-
+import readNFA
 class transicion:
     def __init__(self, lectura,estado, destino):
         self.estado = estado
         self.lectura = lectura
         self.destino = destino
     def miTrans(self):
-        print("TRANSICION", self)
-        print(self.lectura, self.estado, self.destino)
+        #print("TRANSICION", self.lectura, self.estado, self.destino)
+        return (self.lectura, self.estado, self.destino)
     def miEstado(self):
         return self.estado
 
-
-def recorrerEstados(estadoInicial, arrTransiciones, aceptacion):
+def recorrerEstados(estadoInicial, arrTransiciones):
     estadoActual = estadoInicial
-    for tra in arrTransiciones:
-        #print(tra.miTrans())
-        if(estadoActual == tra.estado):
-            print(tra.miTrans())
-            estadoActual = tra.destino
+    arrParaNetworkX = []
+    for i in arrTransiciones:
+        if (i.estado in arrParaNetworkX):
+            pass
+        else:
+            arrParaNetworkX.append(i.estado)
+        if (i.destino in arrParaNetworkX):
+            pass
+        else:
+            arrParaNetworkX.append(i.destino)
+
+    print(arrParaNetworkX)
+    for estado in arrParaNetworkX:
+        print(estado)
+        for x in arrTransiciones:
+            if ((x.estado) == estado):
+                ceros = 0
+                unos = 0
+                print(ceros  , unos  )
+                print(x.miTrans())
 
 if __name__ == '__main__':
     print("NFA 2 DFA PYTHON SCRIPT")
     estadoActual= "p"
     estadoAceptacion = "s"
     arrTransiciones = []
-    arrTransiciones.append(transicion(0, "p", "p" ))
-    arrTransiciones.append(transicion(0, "p", "q" ))
-    arrTransiciones.append(transicion(1, "p", "p" ))
-    arrTransiciones.append(transicion(0, "q", "r" ))
-    arrTransiciones.append(transicion(1, "q", "r"))
-    arrTransiciones.append(transicion(0, "r", "s"))
-    arrTransiciones.append(transicion(0, "s", "s"))
-    arrTransiciones.append(transicion(1, "s", "s"))
 
-    recorrerEstados("p", arrTransiciones, estadoAceptacion)
+    txt = readNFA.readTXT("NFA.txt")
+
+    for tr in txt:
+        arrTransiciones.append(transicion(tr[0], tr[1], tr[2]))
+
+    recorrerEstados("p", arrTransiciones)
