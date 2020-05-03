@@ -22,6 +22,7 @@ def readTXT(nombreArchivo):
     data.pop(-1)
     # for i in range(len(data)):
     #     print (data[i]),
+    file.close()
     return data
 
 #Regresa todas las combinaciones de estados posibles.

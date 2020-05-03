@@ -1,4 +1,5 @@
 import readNFA
+import NFA2DFAVIVS
 class transicion:
     def __init__(self, lectura,estado, destino):
         self.estado = estado
@@ -10,8 +11,8 @@ class transicion:
     def miEstado(self):
         return self.estado
 
-def recorrerEstados(estadoInicial, arrTransiciones):
-    estadoActual = estadoInicial
+def recorrerEstados(arrTransiciones):
+    arrTranOriginal = arrTransiciones
     arrParaNetworkX = []
     for i in arrTransiciones:
         if (i.estado in arrParaNetworkX):
@@ -23,25 +24,63 @@ def recorrerEstados(estadoInicial, arrTransiciones):
         else:
             arrParaNetworkX.append(i.destino)
 
-    print(arrParaNetworkX)
     for estado in arrParaNetworkX:
-        print(estado)
+        #print("ESTADO:    ", estado)
+        newState0 = []
+        newState1 = []
         for x in arrTransiciones:
             if ((x.estado) == estado):
-                ceros = 0
-                unos = 0
-                print(ceros  , unos  )
-                print(x.miTrans())
+                if (x.lectura == '0'):
+                    newState0.append(x.destino)
+                    if (len(newState0) > 1):
+                        arrParaNetworkX.append(newState0)
+                if (x.lectura == '1'):
+                    newState1.append(x.destino)
+                    if (len(newState1) > 1):
+                        arrParaNetworkX.append(newState1)
 
-if __name__ == '__main__':
+
+                #print(x.miTrans(), arrParaNetworkX)
+    print(arrParaNetworkX)
+
+    for n in arrTransiciones:
+        print(n.miTrans())
+
+    print("///////////////////////////////")
+    for j in arrParaNetworkX:
+        if (len(j)>1):
+            for n in arrTransiciones:
+                if (n.destino in j):
+                    #print(n.miTrans())
+                    n.destino = j
+                if (n.estado in j):
+                    #print(n.miTrans())
+                    if (j[0] == n.estado):
+                        pass
+                    else:
+                        n.estado = j
+                    pass
+    print(arrParaNetworkX)
+    for n in arrTransiciones:
+        print(n.miTrans())
+
+def vivMain():
+    data = NFA2DFAVIVS.readTXT('newNFA.txt')
+    newStates = NFA2DFAVIVS.generateStates(data)
+    newTranStates = NFA2DFAVIVS.newTansitionsStates(data)
+    DFA = NFA2DFAVIVS.newTransition(newStates, newTranStates)
+
+
+
+def miMain():
     print("NFA 2 DFA PYTHON SCRIPT")
-    estadoActual= "p"
-    estadoAceptacion = "s"
     arrTransiciones = []
-
     txt = readNFA.readTXT("NFA.txt")
-
     for tr in txt:
         arrTransiciones.append(transicion(tr[0], tr[1], tr[2]))
+    recorrerEstados(arrTransiciones)
 
-    recorrerEstados("p", arrTransiciones)
+if __name__ == '__main__':
+    miMain()
+
+
