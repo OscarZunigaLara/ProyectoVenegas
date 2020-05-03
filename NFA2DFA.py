@@ -6,6 +6,7 @@ class transicion:
         self.estado = estado
         self.lectura = lectura
         self.destino = destino
+
     def miTrans(self):
         #print("TRANSICION", self.lectura, self.estado, self.destino)
         return (self.lectura, self.estado, self.destino)
