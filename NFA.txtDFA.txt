@@ -1,0 +1,1 @@
+{(0,q,r)(1,q,r)(0,p,qp)(1,p,p)(0,r,s)(0,s,s)(1,s,s)(0,qp,qpr)(0,qr,r)(0,qs,rs)(0,pr,qp)(0,ps,qps)(0,rs,s)(0,qpr,qpr)(0,qps,qprs)(0,qrs,rs)(0,prs,qps)(0,qprs,qprs)(1,qp,pr)(1,qr,r)(1,qs,rs)(1,pr,p)(1,ps,ps)(1,rs,s)(1,qpr,pr)(1,qps,prs)(1,qrs,rs)(1,prs,ps)(1,qprs,prs)}

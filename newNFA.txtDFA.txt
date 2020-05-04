@@ -1,0 +1,1 @@
+{(1,q,r)(1,p,qp)(0,p,p)(0,qp,Nnoep)(1,qp,qrp)}
