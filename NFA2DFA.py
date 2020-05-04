@@ -1,5 +1,6 @@
 import readNFA
 import NFA2DFAVIVS
+import copy
 
 class transicion:
     def __init__(self, lectura,estado, destino):
@@ -16,8 +17,7 @@ class transicion:
 
 
 
-def dfaGen(arrTransiciones):
-    copyTrans = arrTransiciones.copy()
+def arrNetwork(arrTransiciones):
     arrParaNetworkX = []
     for i in arrTransiciones:
         if (i.estado in arrParaNetworkX):
@@ -28,20 +28,94 @@ def dfaGen(arrTransiciones):
             pass
         else:
             arrParaNetworkX.append(i.destino)
-    for estado in arrParaNetworkX:
-        #print("ESTADO:    ", estado)
-        newState0 = []
-        newState1 = []
-        for x in arrTransiciones:
-            if ((x.estado) == estado):
-                if (x.lectura == '0'):
-                    newState0.append(x.destino)
-                    if (len(newState0) > 1):
-                        arrParaNetworkX.append(newState0)
-                if (x.lectura == '1'):
-                    newState1.append(x.destino)
-                    if (len(newState1) > 1):
-                        arrParaNetworkX.append(newState1)
+    return  arrParaNetworkX
+
+def dfaGen(arrTransiciones):
+    copyTrans = []
+    for n in arrTransiciones:
+        copyTrans.append(transicion(n.lectura, n.estado,n.destino))
+
+    arrNetwork1 = arrNetwork(arrTransiciones)
+
+    for n in arrTransiciones:
+        print(n.miTrans())
+    print("//////////////////////")
+    indeter = []
+
+    for n in arrNetwork1:
+        print(n)
+        sum = 0
+        for h in arrTransiciones:
+            if h.estado == n:
+                sum = sum+1
+        if (sum > 2):
+            indeter.append(n)
+
+    print("indeter: ",indeter)
+    arrNet2 = []
+    for n in indeter:
+        for h in arrNetwork1:
+            if n == h:
+                pass
+            else:
+                arrNet2.append([n,h])
+
+    for n in arrNet2:
+        arrNetwork1.append(n)
+
+    newARRTRA= []
+
+
+    for x in arrNetwork1:
+        sumCERO= 0
+        sumUNO = 1
+        for y in arrTransiciones:
+            if(y.estado == x):
+                print(x, "   ", y.miTrans(), sumCERO, sumUNO)
+                newTrans = transicion(y.lectura, y.estado, y.destino)
+                if (y.lectura == '0'):
+                    sumCERO +=1
+                if y.lectura == '1':
+                    sumUNO +=1
+
+    for x in arrNetwork1:
+        sumCERO= 0
+        sumUNO = 1
+        for y in arrTransiciones:
+            if(y.destino == x):
+                print(x, "   ", y.miTrans(), sumCERO, sumUNO)
+                newTrans = transicion(y.lectura, y.estado, y.destino)
+
+                if (y.lectura == '0'):
+                    sumCERO +=1
+                if y.lectura == '1':
+                    sumUNO +=1
+
+    print(arrNetwork1)
+    print("//////////////////////")
+    for n in arrTransiciones:
+        print(n.miTrans())
+    print("//////////////////////")
+
+    for n in newARRTRA:
+        print(n.miTrans())
+'''
+
+        for n in copyTrans:
+        for h in copyTrans:
+            if (h.lectura == '0'):
+                arrTransiciones.append(transicion('0', h.destino, h.estado))
+        for h in copyTrans:
+            if (h.lectura == '1'):
+                arrTransiciones.append(transicion('1', h.destino, h.estado))
+
+    
+
+    ("//////////////////////")
+
+   
+
+
     newaa = []
     for x in arrParaNetworkX:
         if (len(x)> 1):
@@ -69,18 +143,8 @@ def dfaGen(arrTransiciones):
                     else:
                         n.estado = j
                     pass
-    print(arrParaNetworkX)
-
-
-    for x in copyTrans:
-        print(x.miTrans())
-
-    print("//////////////////////")
-
-    for n in arrTransiciones:
-        print(n.miTrans())
-
-
+    
+'''
 
 def recorrerEstados(arrTransiciones):
     arrTranOriginal = arrTransiciones
@@ -134,6 +198,8 @@ def recorrerEstados(arrTransiciones):
     print(arrParaNetworkX)
     for n in arrTransiciones:
         print(n.miTrans())
+
+
 
 def vivMain():
     data = NFA2DFAVIVS.readTXT('NFA.txt')
