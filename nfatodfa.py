@@ -176,28 +176,24 @@ def newTransition(states, transitionStates):
 
     return DFA
 
-
 def exportarTxt(DFA):
-    def exportarTxt(DFA):
-        printToFile = []
-        f = open("DFA.txt", "w+")
-        printToFile = DFA
-        toFile = ("{")
+    f = open("DFA.txt", "w+")
+    toFile = ("{")
 
-        for n in DFA:
-            toFile = toFile + "("
-            for x in n:
-                for h in x:
-                    toFile = toFile + str(h)
-                toFile = toFile + ','
-            toFile = toFile[:-1]
-            toFile = toFile + ")"
+    for n in DFA:
+        toFile = toFile + "("
+        for x in n:
+            for h in x:
+                toFile = toFile + str(h)
+            toFile = toFile + ','
+        toFile = toFile[:-1]
+        toFile = toFile + ")"
 
-        toFile = toFile + "}"
-        f.write(toFile)
-        return 0
+
+    toFile = toFile + "}"
+    print(toFile)
+    f.write(toFile)
     return 0
-
 
 def main():
     data = readTXT('NFA.txt')
