@@ -176,8 +176,9 @@ def newTransition(states, transitionStates):
 
     return DFA
 
-def exportarTxt(DFA):
-    f = open("DFA.txt", "w+")
+def exportarTxt(DFA,file):
+    file = file + "DFA.txt"
+    f = open(file, "w+")
     toFile = ("{")
 
     for n in DFA:
@@ -196,11 +197,12 @@ def exportarTxt(DFA):
     return 0
 
 def main():
-    data = readTXT('NFA.txt')
+    file = input("INSERTE NOMBRE DEL ARCHIVO:   ")
+    data = readTXT(file)
     newStates = generateStates(data)
     newTranStates = newTansitionsStates(data)
     DFA = newTransition(newStates, newTranStates)
-    exportarTxt(DFA)
+    exportarTxt(DFA, file)
 
 
 main()
